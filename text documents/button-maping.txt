@@ -1,0 +1,8 @@
+L thumb - rov controls
+l thumb button - lock for rov
+d pad - rotation
+r thumb camera
+back - disable gyro stablization
+Y - Light
+X - Up
+B - Down
