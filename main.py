@@ -24,14 +24,17 @@ max_elevation = 1 #max amount of m/s that the ROV can go up/down by in 1ms
 
 #Initialisation of variables for the buttons
 A = False
-Apressed = False
+Aprepressed = False
 B = False
 Bpressed = False
 Y = False
-Ypressed = False
+Yprepressed = False
 X = False
-Xpressed = False
-
+Xprepressed = False
+lthumb = False
+lthumbprepressed = False
+back = False
+backprepressed = False
 
 
 while True:
@@ -47,25 +50,37 @@ while True:
     rotation = thumbsticks[0][0]*max_rotation #how much to rotate the ROV by every 1ms
     velocity = thumbsticks[0][1] #Velocity of the ROV (Basically controls PMW of the motors for forwards and backwards movement)
     elevation = [triggers[0]*max_elevation triggers[1]*max_elevation] #Up-Down speed. pressing both triggers is frasers issue
+    camera = [thumbsticks[1][0], thumbsticks[1][1]] #This is camera movement
 
     if switches["LEFT_THUMB"] == False:
-        lthumbpressed
+        lthumbprepressed = False
+
+    if switches["LEFT_THUMB"] == True and lthumbprepressed == False:
+        lthumb = not lthumb #If true, lock rotation and velocity for ROV
+        lthumbprepressed = True
+
 
     if switches["Y"] == False:
-        Ypressed = False
+        Yprepressed = False
 
     if switches["Y"] == True and Yprepressed == False:
-        Y = not Y
+        Y = not Y #If true, this turns on flashlight
         Yprepressed = True
 
-    
+    if switches["back"] == False:
+        backprepressed = False
+
+    if switches["back"] == True and backprepressed == False:
+        back = not back #If true then this should disable gyro 
+        backprepressed = True
 
 
 
 
-    buttons = [X, Y, A, B]
+
+    buttons = [X, Y, A, B, lthumb]
         
-    tosend = [velocity, rotation, elevation, buttons, movelock]
+    tosend = [velocity, rotation, elevation, buttons, camera]
 
 
 
