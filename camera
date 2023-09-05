@@ -1,0 +1,8 @@
+cd ~
+sudo apt-get update
+sudo apt-get install -y git python3-pip
+sudo pip3 install --upgrade adafruit-python-shell click
+git clone https://github.com/adafruit/Raspberry-Pi-Installer-Scripts.git
+cd Raspberry-Pi-Installer-Scripts
+
+  sudo python3 adafruit-pitft.py --display=22 --rotation=90 --install-type=console
