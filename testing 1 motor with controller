@@ -1,3 +1,19 @@
+timeout = 0 
+max_rotation = 1
+max_elevation = 1
+A = False
+Aprepressed = False
+B = False
+Bpressed = False
+Y = False
+Yprepressed = False
+X = False
+Xprepressed = False
+lthumb = False
+lthumbprepressed = False
+back = False
+backprepressed = False
+
 import XInput
 import time
 import serial
