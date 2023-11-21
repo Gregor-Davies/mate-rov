@@ -28,10 +28,18 @@ while True:
     switches = x.get_button_values(state)
     triggers = x.get_trigger_values(state)
 
+    if switches["A"] == True:
+        ser.write(str.encode("001"))
+    elif switches["B"] == True:
+        ser.write(str.encode("000"))
+    elif switches["Y"] == True:
+        ser.close()
+    
     leftStick = thumbsticks[0][1]*max_rotation
 
-    time.sleep(0.5)
     StickValue = (round(abs(leftStick * 100)))
-    stringValues = (str(StickValue) + " 0 0 0 0 0")
-
-    ser.write(stringValues)    
+    #stringValues = (str(StickValue) + " 0 0 0 0 0")
+    stringValues = (str(StickValue))
+    ser.write(str.encode(stringValues))
+    ser.write(str.encode("\r\n"))
+    print(stringValues)
