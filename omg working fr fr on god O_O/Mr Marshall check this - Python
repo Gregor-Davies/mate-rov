@@ -1,0 +1,57 @@
+import XInput
+import time
+import serial
+x = XInput
+max_rotation = 1
+
+ser = serial.Serial(port = "COM4", baudrate=9600, timeout=1)
+
+"""
+-2 = left
+2 = right
+-1 = backwards
+1 = forwards
+"""
+
+while True:
+    state = x.get_state(0)
+    thumbsticks = x.get_thumb_values(state)
+    switches = x.get_button_values(state)
+    triggers = x.get_trigger_values(state)
+
+    if switches["Y"] == True:
+        ser.close()
+    
+    leftStick_Horizontal = thumbsticks[0][0]  # Horizontal value of the left stick
+    leftStick_Vertical = thumbsticks[0][1]    # Vertical value of the left stick
+    rightStick_Vertical = thumbsticks[1][1]   # Vertical value of the right stick
+    rightStick_Horizontal = thumbsticks[1][0] # Horizontal value of the right stick
+
+    leftStick_Vertical *= max_rotation
+    leftStick_Horizontal *= max_rotation
+    rightStick_Vertical *= max_rotation
+    rightStick_Horizontal *= max_rotation
+
+    H_Right = (round(rightStick_Horizontal * 100))
+    if H_Right < 0:
+        H_string = "-2"
+    elif H_Right == 0:
+        H_string = "0"
+    else:
+        H_string = "2"
+
+    V_Right = (round(rightStick_Vertical * 100))
+    if V_Right < 0:
+        V_string = "-1"
+    elif V_Right == 0:
+        V_string = "0"
+    else:
+        V_string = "1"
+
+    ser.write(str.encode(H_string))
+    ser.write(str.encode("\r\n"))
+    ser.write(str.encode(V_string))
+    ser.write(str.encode("\r\n"))
+    print(H_string)
+    print(V_string)
+    
