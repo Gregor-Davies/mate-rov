@@ -1,0 +1,54 @@
+/*
+-2 = left
+2 = right
+-1 = backwards
+1 = forwards
+*/
+
+int M1A = 4; // front right motor clockwise
+int M1B = 5; // front right motor anticlockwise
+int M2A = 2; // front left motor clockwise
+int M2B = 3; // front left motor anticlockwise
+int motorValue = 0;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(M1A, OUTPUT);
+  pinMode(M1B, OUTPUT);
+}
+
+void loop() {
+  if (Serial.available() > 0) { // Check if data is available to read
+    String serialData = Serial.readStringUntil('\n'); // Read the incoming byte
+    motorValue = serialData.toInt(); // Convert the received string to an integer
+
+    if (motorValue == 1) {
+      digitalWrite(M1A, HIGH);
+      digitalWrite(M2A, HIGH);
+    } else if (motorValue == -1) {
+      digitalWrite(M1A, LOW);
+      digitalWrite(M2A, LOW);
+    } else if (motorValue == 0) {
+      digitalWrite(M1A, LOW);
+      digitalWrite(M2A, LOW);
+    } else if (motorValue == -2) {
+      digitalWrite(M1A, HIGH);
+      digitalWrite(M2A, LOW);
+    } else if (motorValue == 2) {
+      digitalWrite(M2A, HIGH);
+      digitalWrite(M1A, LOW);
+    } else if (motorValue == 0) {
+      digitalWrite(M1A, LOW);
+      digitalWrite(M2A, LOW);
+    }
+
+/*    if (motorValue == 1) {
+      digitalWrite(M1A, HIGH);
+      digitalWrite(M2A, LOW);
+    } else if (motorValue == -1) {
+      digitalWrite(M2A, HIGH);
+      digitalWrite(M1A, LOW);
+    }
+*/
+  }
+}
